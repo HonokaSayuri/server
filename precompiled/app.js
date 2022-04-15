@@ -2324,14 +2324,12 @@ const search = (info)=>{
     // })
     const keyword = encodeURIComponent(info.keyword.replace(' - ', ''));
     const url = `http://www.kuwo.cn/api/www/search/searchMusicBykeyWord?key=${keyword}&pn=1&rn=30`;
-    return request('GET', `http://kuwo.cn/search/list?key=${keyword}`).then((response)=>response.headers['set-cookie'].find((line)=>line.includes('kw_token')
-        ).replace(/;.*/, '').split('=').pop()
-    ).then((token)=>request('GET', url, {
-            referer: `http://www.kuwo.cn/search/list?key=${keyword}`,
-            csrf: token,
-            cookie: `kw_token=${token}`
-        })
-    ).then((response)=>response.json()
+    const token = Math.random().toString(16).slice(-11).toUpperCase();
+    return request('GET', url, {
+        referer: `http://www.kuwo.cn/search/list?key=${keyword}`,
+        csrf: token,
+        cookie: `kw_token=${token}`
+    }).then((response)=>response.json()
     ).then((jsonBody)=>{
         if (jsonBody && typeof jsonBody === 'object' && 'code' in jsonBody && jsonBody.code !== 200) return Promise.reject();
         const list = jsonBody.data.list.map(format);
@@ -16233,7 +16231,7 @@ module.exports = JSON.parse('{"name":"pino","version":"6.14.0","description":"su
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@unblockneteasemusic/server","version":"0.27.0-rc.6","description":"Revive unavailable songs for Netease Cloud Music","main":"src/provider/match.js","bin":{"unblockneteasemusic":"./precompiled/app.js"},"engines":{"node":">= 12"},"scripts":{"build":"webpack","pkg":"pkg . --out-path=dist/","test":"jest"},"pkg":{"assets":["server.key","server.crt"],"targets":["node16-linux-arm64","node16-win-arm64","node16-linux-x64","node16-win-x64"],"outputPath":"dist"},"repository":{"type":"git","url":"https://github.com/UnblockNeteaseMusic/server.git"},"author":"nondanee, 1715173329, pan93412","license":"LGPL-3.0-only","dependencies":{"node-windows":"^1.0.0-beta.7","pino":"6.14.0","pino-pretty":"^7.6.1"},"devDependencies":{"@swc/core":"^1.2.164","@types/node":"^17.0.23","@types/pino":"6.3.12","browserslist":"^4.20.2","core-js":"^3.21.1","jest":"^27.5.1","pkg":"^5.6.0","prettier":"^2.6.2","swc-loader":"^0.1.15","typescript":"^4.6.3","webpack":"^5.72.0","webpack-cli":"^4.9.2"},"resolutions":{"minimist":"^1.2.6"},"publishConfig":{"access":"public"},"packageManager":"yarn@3.1.1"}');
+module.exports = JSON.parse('{"name":"@unblockneteasemusic/server","version":"0.27.0-rc.6","description":"Revive unavailable songs for Netease Cloud Music","main":"src/provider/match.js","bin":{"unblockneteasemusic":"./precompiled/app.js"},"engines":{"node":">= 12"},"scripts":{"build":"webpack","pkg":"pkg . --out-path=dist/","test":"jest"},"pkg":{"assets":["server.key","server.crt"],"targets":["node16-linux-arm64","node16-win-arm64","node16-linux-x64","node16-win-x64"],"outputPath":"dist"},"repository":{"type":"git","url":"https://github.com/UnblockNeteaseMusic/server.git"},"author":"nondanee, 1715173329, pan93412","license":"LGPL-3.0-only","dependencies":{"node-windows":"^1.0.0-beta.7","pino":"6.14.0","pino-pretty":"^7.6.1"},"devDependencies":{"@swc/core":"^1.2.165","@types/node":"^17.0.23","@types/pino":"6.3.12","browserslist":"^4.20.2","core-js":"^3.21.1","jest":"^27.5.1","pkg":"^5.6.0","prettier":"^2.6.2","swc-loader":"^0.1.15","typescript":"^4.6.3","webpack":"^5.72.0","webpack-cli":"^4.9.2"},"resolutions":{"minimist":"^1.2.6"},"publishConfig":{"access":"public"},"packageManager":"yarn@3.1.1"}');
 
 /***/ })
 
